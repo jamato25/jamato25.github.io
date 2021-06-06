@@ -19,6 +19,7 @@ class CreateTodo extends React.Component {
     e.preventDefault()
     await axios.post('/todos', {content: this.state.text, isDone: false})
     .then(response => {
+        this.props.addTodo(response.data)
         this.setState({text: ""})
     })
     .catch(e => {
