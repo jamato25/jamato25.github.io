@@ -1,16 +1,33 @@
 import React from 'react';
+import axios from 'axios';
+const Footer = ({itemCount, clearCompleted, todos, anyCompleted, changeFilter}) =>{
 
-const Footer = () =>{
+  const onClearCompleted =  async () => {
+    let updatedTodos = [...todos]
+    clearCompleted()
+    for(let todo of updatedTodos){
+      if(todo.isDone){
+        await axios.delete(`/todos/${todo.id}`)
+        .catch(e => {
+            console.log(e);
+        });
+      }
+    }
+  }
+
+  const onFilter = (e) => {
+    changeFilter(e.target.name)
+  }
 
   return(
     <div>
-      <div>Items Left</div>
+      <div>{itemCount} Items Left</div>
       <div>
-        <button>All</button>
-        <button>Active</button>
-        <button>Completed</button>
+        <button onClick = {onFilter} name = "All">All</button>
+        <button onClick = {onFilter} name = "Active">Active</button>
+        <button onClick = {onFilter} name = "Completed">Completed</button>
       </div>
-      <button>Clear Completed</button>
+      <button onClick = {onClearCompleted} className = {anyCompleted? "" : "hidden"}>Clear Completed</button>
     </div>
   )
 }

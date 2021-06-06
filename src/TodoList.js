@@ -1,12 +1,24 @@
 import React from 'react';
 import TodoItem from './TodoItem'
 
-const TodoList = ({todos, handleToggle, handleDelete}) =>{
+const TodoList = ({todos, handleToggle, handleDelete, filter, editTodo}) =>{
+  let filteredTodos = [...todos]
+  if(filter === "Completed"){
+    filteredTodos = todos.filter(todo => {
+      return todo.isDone;
+    });
+  }
+
+  if(filter === "Active"){
+    filteredTodos = todos.filter(todo => {
+      return !todo.isDone;
+    });
+  }
 
   return(
     <ul>
-      {todos.map(todo => {
-        return (<TodoItem todo = {todo} handleToggle = {handleToggle} handleDelete = {handleDelete}/>)
+      {filteredTodos.map(todo => {
+        return (<TodoItem todo = {todo} handleToggle = {handleToggle} handleDelete = {handleDelete} editTodo = {editTodo}/>)
       })
       }
     </ul>

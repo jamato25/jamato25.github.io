@@ -1,6 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios'
-const TodoItem = ({todo, handleToggle, handleDelete}) =>{
+import EditTodo from './EditTodo'
+
+const TodoItem = ({todo, handleToggle, handleDelete, editTodo}) =>{
+
+  const [editToggle, setEditToggle] = useState(true)
 
   const onClickComplete = async (e) => {
     handleToggle(e.target.id)
@@ -8,7 +12,6 @@ const TodoItem = ({todo, handleToggle, handleDelete}) =>{
     .catch(e => {
         console.log(e);
     });
-    console.log(e.target)
   }
 
   const onClickDelete = async (e) => {
@@ -17,16 +20,21 @@ const TodoItem = ({todo, handleToggle, handleDelete}) =>{
     .catch(e => {
         console.log(e);
     });
-    console.log(e.target)
 
   }
 
   return (
-    <form key = {todo.id}>
-      <input id = {todo.id} type="checkbox"  onChange = {onClickComplete} checked = {todo.isDone}></input>
-      <label className = {todo.isDone? "strike" : ""}> {todo.content} </label>
-      <input id = {todo.id} type="checkbox" onChange = {onClickDelete}></input>
-    </form>
+    <li>
+      <div key = {todo.id} >
+        <input id = {todo.id} type="checkbox"  onChange = {onClickComplete} checked = {todo.isDone}></input>
+        {editToggle ? (
+            <label className = {todo.isDone? "strike" : ""} onDoubleClick={() =>{setEditToggle(false)}} >{todo.content}</label>
+          ) :
+          (<EditTodo todo = {todo} editTodo = {editTodo} setEditToggle = {setEditToggle}/>)}
+        <input id = {todo.id} type="checkbox" onChange = {onClickDelete}></input>
+      </div>
+    </li>
+
   )
 }
 
