@@ -1,14 +1,28 @@
 import './App.css';
+import TodoList from './TodoList'
+import CreateTodo from './CreateTodo'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const list = [];
+
 function App() {
+  const [ todos, setTodos ] = useState([]);
+
+  useEffect(() => {
+    axios.get('/todos')
+    .then(response => {
+      setTodos(response.data)
+    })
+    .catch(e => {
+        console.log(e);
+        setTodos(todos)
+    });
+  })
+
   return (
     <div className="App">
-      <form>
-        <label>Create To Do</label>
-        <input type = "text"></input>
-      </form>
-      <button></button>
+      <CreateTodo />
+      <TodoList todos = {todos}/>
     </div>
   );
 }
