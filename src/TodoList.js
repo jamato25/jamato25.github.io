@@ -2,6 +2,8 @@ import React from 'react';
 import TodoItem from './TodoItem'
 
 const TodoList = ({todos, handleToggle, handleDelete, filter, editTodo}) =>{
+  //todos list is fist filtered if the filter is selected in the state before
+  //displaying all appropriate todos.
   let filteredTodos = [...todos]
   if(filter === "Completed"){
     filteredTodos = todos.filter(todo => {

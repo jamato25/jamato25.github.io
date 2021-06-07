@@ -1,40 +1,34 @@
 import axios from 'axios';
-import React from 'react';
+import React, {useState} from 'react';
 
-class CreateTodo extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      text: ""
-    }
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+//Component
+const CreateTodo = ({addTodo}) => {
+
+
+  const [text, setText ] = useState("")
+
+  const onChange = (e) =>{
+    setText(e.target.value)
   }
 
-  onChange(e){
-    this.setState({text: e.target.value})
-  }
-
-  async onSubmit(e){
+  const onSubmit = async (e) =>{
     e.preventDefault()
-    await axios.post('/todos', {content: this.state.text, isDone: false})
+    await axios.post('/todos', {content: text, isDone: false})
     .then(response => {
-        this.props.addTodo(response.data)
-        this.setState({text: ""})
+        addTodo(response.data)
+        setText("")
     })
     .catch(e => {
         console.log(e);
-        this.setState({...this.state});
+        setText(text)
     });
   }
 
-  render(){
-    return(
-      <form className = "CreateTodoUpper-form" onSubmit = {this.onSubmit}>
-        <input className = "CreateTodoUpper-form-input" type = "text" value = {this.state.text} placeholder = "What needs to be done?" onChange = {this.onChange} ></input>
-      </form>
-    )
-  }
+  return(
+    <form className = "CreateTodoUpper-form" onSubmit = {onSubmit}>
+      <input className = "CreateTodoUpper-form-input" type = "text" value = {text} placeholder = "What needs to be done?" onChange = {onChange} ></input>
+    </form>
+  )
 }
 
 export default CreateTodo

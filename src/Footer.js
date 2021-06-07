@@ -1,7 +1,10 @@
 import React from 'react';
 import axios from 'axios';
+
+//Component displays the filtering, item count, and clear component buttons on bottom of app
 const Footer = ({itemCount, clearCompleted, todos, anyCompleted, changeFilter, filter}) =>{
 
+  //clears all completed tasks in database and moves state back up to app.js
   const onClearCompleted =  async () => {
     let updatedTodos = [...todos]
     clearCompleted()

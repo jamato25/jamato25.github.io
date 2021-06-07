@@ -6,6 +6,7 @@ const TodoItem = ({todo, handleToggle, handleDelete, editTodo}) =>{
 
   const [editToggle, setEditToggle] = useState(true)
 
+  //Updates database with checked complete items
   const onClickComplete = async (e) => {
     handleToggle(e.target.id)
     await axios.put(`/todos/${todo.id}`, {...todo, isDone: !todo.isDone})
@@ -14,6 +15,7 @@ const TodoItem = ({todo, handleToggle, handleDelete, editTodo}) =>{
     });
   }
 
+  //Updates database with deleted items
   const onClickDelete = async (e) => {
     handleDelete(e.target.id)
     await axios.delete(`/todos/${todo.id}`)
