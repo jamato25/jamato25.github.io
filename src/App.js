@@ -10,6 +10,7 @@ function App() {
   const [ todos, setTodos ] = useState([]);
   const [filter, setFilter ] = useState("All")
 
+  //Fetch initial data from database for the app to load.
   useEffect( () => {
     async function fetchData(){
         await axios.get('/todos')
@@ -25,13 +26,14 @@ function App() {
 
   }, [])
 
+  //toggles the checkbox on and off for completed tasks in the state.
   const handleToggle = (id) => {
     let updatedTodos = todos.map(todo => {
       return todo.id === Number(id) ? { ...todo, isDone: !todo.isDone } : { ...todo};
     });
     setTodos(updatedTodos);
   }
-
+  //adds todo to the state
   const addTodo = (newTodo) => {
     let copy = [...todos];
     copy = [...copy, { ...newTodo }];
@@ -39,6 +41,7 @@ function App() {
 
   }
 
+  //deletes a single todo from the state
   const deleteTodo = (id) => {
     let updatedTodos = todos.filter(todo => {
       return todo.id !== Number(id);
@@ -46,10 +49,13 @@ function App() {
     setTodos(updatedTodos);
   }
 
+  //sets the state variable "filter" to whichever filter is clicked.
   const changeFilter = (newFilter) => {
     setFilter(newFilter)
   }
 
+  //handles state change for marking all tasks as complete when the
+  //chevron  button is clicked
   const checkAll = () => {
     let updatedTodos = [...todos]
     let allCompleted = true;
@@ -65,6 +71,8 @@ function App() {
     setTodos(updatedTodos);
   }
 
+  //handles state change for deleting all completed tasks
+  //when the clear completed button is clicked
   const clearCompleted = () => {
     let updatedTodos = todos.filter(todo => {
       return !todo.isDone;
@@ -72,6 +80,7 @@ function App() {
     setTodos(updatedTodos);
   }
 
+  //Calculates the total completed tasks for display in the footer
   const findCount = () => {
     let count = 0;
     for(let elem of todos){
@@ -80,6 +89,8 @@ function App() {
     return count;
   }
 
+  //Determines if any tasks are currently completed.
+  //Needed to toggle the "clear completed" button from visible to hidden
   const anyCompleted = () => {
     let anyComplete = false;
     for(let elem of todos){
@@ -91,6 +102,7 @@ function App() {
     return anyComplete
   }
 
+  //handles state change for edited tasks
   const editTodo = (id, text) => {
     let updatedTodos = [...todos]
     for(let todo of updatedTodos){
@@ -103,12 +115,16 @@ function App() {
 
   return (
     <div className="App">
-      <div>
-        <FiChevronDown onClick = {checkAll}/>
-        <CreateTodo addTodo = {addTodo}/>
+      <h1 className = "Title">todos</h1>
+      <div className = "TodoListContainer">
+        <div className = "CreateTodoUpper">
+          <FiChevronDown onClick = {checkAll}/>
+          <CreateTodo addTodo = {addTodo}/>
+        </div>
+        <TodoList  todos = {todos} handleToggle = {handleToggle} handleDelete = {deleteTodo} filter = {filter} editTodo = {editTodo}/>
+        <Footer className = "Footer" filter = {filter} checkAll = {checkAll} itemCount = {findCount()} clearCompleted = {clearCompleted} todos = {todos} anyCompleted = {anyCompleted()} changeFilter = {changeFilter}/>
       </div>
-      <TodoList todos = {todos} handleToggle = {handleToggle} handleDelete = {deleteTodo} filter = {filter} editTodo = {editTodo}/>
-      <Footer filter = {filter} checkAll = {checkAll} itemCount = {findCount()} clearCompleted = {clearCompleted} todos = {todos} anyCompleted = {anyCompleted()} changeFilter = {changeFilter}/>
+
     </div>
   );
 }

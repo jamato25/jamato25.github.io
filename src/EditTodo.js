@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, {useState} from 'react';
 
+//Component is used to edit tasks on a double click and submits changes to database
+
 const EditTodo = ({todo, setEditToggle, editTodo}) =>  {
 
   const [text, setText ] = useState(todo.content)
@@ -21,7 +23,7 @@ const EditTodo = ({todo, setEditToggle, editTodo}) =>  {
   }
 
   return(
-    <form onSubmit = {onSubmit} id = {todo.id}>
+    <form className =  "ToDoListItem-Edit" onSubmit = {onSubmit} id = {todo.id}>
       <input type = "text" value = {text} onChange = {onChange}
         onKeyDown={(e) => {
           if (e.key === 'Escape') {
