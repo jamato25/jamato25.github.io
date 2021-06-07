@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-const Footer = ({itemCount, clearCompleted, todos, anyCompleted, changeFilter}) =>{
+const Footer = ({itemCount, clearCompleted, todos, anyCompleted, changeFilter, filter}) =>{
 
   const onClearCompleted =  async () => {
     let updatedTodos = [...todos]
@@ -21,13 +21,15 @@ const Footer = ({itemCount, clearCompleted, todos, anyCompleted, changeFilter}) 
 
   return(
     <div>
-      <div>{itemCount} Items Left</div>
-      <div>
-        <button onClick = {onFilter} name = "All">All</button>
-        <button onClick = {onFilter} name = "Active">Active</button>
-        <button onClick = {onFilter} name = "Completed">Completed</button>
+      <div className = "Footer">
+        <div>{itemCount} Items Left</div>
+        <div className = "Footer-Filter-Btn-Container">
+          <button className = {filter === "All" ? "Footer-Filter-Btn-Selected" : "Footer-Filter-Btn"} onClick = {onFilter} name = "All">All</button>
+          <button className = {filter === "Active" ? "Footer-Filter-Btn-Selected" : "Footer-Filter-Btn"} onClick = {onFilter} name = "Active">Active</button>
+          <button className = {filter === "Completed" ? "Footer-Filter-Btn-Selected" : "Footer-Filter-Btn"} onClick = {onFilter} name = "Completed">Completed</button>
+        </div>
+        <button onClick = {onClearCompleted} className = {anyCompleted? "Footer-Clear-Completed-Btn" : "Footer-Clear-Completed-Btn-hidden"}>Clear Completed</button>
       </div>
-      <button onClick = {onClearCompleted} className = {anyCompleted? "" : "hidden"}>Clear Completed</button>
     </div>
   )
 }

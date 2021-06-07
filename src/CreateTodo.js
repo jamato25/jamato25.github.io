@@ -30,8 +30,8 @@ class CreateTodo extends React.Component {
 
   render(){
     return(
-      <form onSubmit = {this.onSubmit}>
-        <input type = "text" value = {this.state.text} placeholder = "What needs to be done?" onChange = {this.onChange} ></input>
+      <form className = "CreateTodoUpper-form" onSubmit = {this.onSubmit}>
+        <input className = "CreateTodoUpper-form-input" type = "text" value = {this.state.text} placeholder = "What needs to be done?" onChange = {this.onChange} ></input>
       </form>
     )
   }

@@ -16,7 +16,7 @@ const TodoList = ({todos, handleToggle, handleDelete, filter, editTodo}) =>{
   }
 
   return(
-    <ul>
+    <ul className = "TodoList">
       {filteredTodos.map(todo => {
         return (<TodoItem todo = {todo} handleToggle = {handleToggle} handleDelete = {handleDelete} editTodo = {editTodo}/>)
       })

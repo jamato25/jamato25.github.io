@@ -21,7 +21,7 @@ const EditTodo = ({todo, setEditToggle, editTodo}) =>  {
   }
 
   return(
-    <form onSubmit = {onSubmit} id = {todo.id}>
+    <form className =  "ToDoListItem-Edit" onSubmit = {onSubmit} id = {todo.id}>
       <input type = "text" value = {text} onChange = {onChange}
         onKeyDown={(e) => {
           if (e.key === 'Escape') {

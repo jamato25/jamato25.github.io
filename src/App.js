@@ -103,12 +103,16 @@ function App() {
 
   return (
     <div className="App">
-      <div>
-        <FiChevronDown onClick = {checkAll}/>
-        <CreateTodo addTodo = {addTodo}/>
+      <h1 className = "Title">todos</h1>
+      <div className = "TodoListContainer">
+        <div className = "CreateTodoUpper">
+          <FiChevronDown onClick = {checkAll}/>
+          <CreateTodo addTodo = {addTodo}/>
+        </div>
+        <TodoList  todos = {todos} handleToggle = {handleToggle} handleDelete = {deleteTodo} filter = {filter} editTodo = {editTodo}/>
+        <Footer className = "Footer" filter = {filter} checkAll = {checkAll} itemCount = {findCount()} clearCompleted = {clearCompleted} todos = {todos} anyCompleted = {anyCompleted()} changeFilter = {changeFilter}/>
       </div>
-      <TodoList todos = {todos} handleToggle = {handleToggle} handleDelete = {deleteTodo} filter = {filter} editTodo = {editTodo}/>
-      <Footer filter = {filter} checkAll = {checkAll} itemCount = {findCount()} clearCompleted = {clearCompleted} todos = {todos} anyCompleted = {anyCompleted()} changeFilter = {changeFilter}/>
+
     </div>
   );
 }

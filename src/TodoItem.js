@@ -24,15 +24,13 @@ const TodoItem = ({todo, handleToggle, handleDelete, editTodo}) =>{
   }
 
   return (
-    <li>
-      <div key = {todo.id} >
-        <input id = {todo.id} type="checkbox"  onChange = {onClickComplete} checked = {todo.isDone}></input>
+    <li className = "ToDoListItem" key = {todo.id}>
+        <input  id = {todo.id} type="checkbox"  onChange = {onClickComplete} checked = {todo.isDone}></input>
         {editToggle ? (
-            <label className = {todo.isDone? "strike" : ""} onDoubleClick={() =>{setEditToggle(false)}} >{todo.content}</label>
+            <label className = {todo.isDone? "ToDoListItem-Label-Strike" : "ToDoListItem-Label"} onDoubleClick={() =>{setEditToggle(false)}} >{todo.content}</label>
           ) :
           (<EditTodo todo = {todo} editTodo = {editTodo} setEditToggle = {setEditToggle}/>)}
-        <input id = {todo.id} type="checkbox" onChange = {onClickDelete}></input>
-      </div>
+        <div className = "ToDoListItem-Delete" id = {todo.id} onClick = {onClickDelete}> x </div>
     </li>
 
   )
